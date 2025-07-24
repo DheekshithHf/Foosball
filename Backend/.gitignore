@@ -1,0 +1,34 @@
+# Django
+*.pyc
+__pycache__/
+db.sqlite3
+*.sqlite3
+*.log
+
+# Django media/static
+/media
+/staticfiles
+/static
+
+# VSCode
+.vscode/
+
+# Python virtualenv
+venv/
+.env
+.venv/
+.env.*
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Migrations (optional, keep if you want to track them)
+# **/migrations/*.pyc
+# **/migrations/__pycache__/
+# **/migrations/0001_initial.py
+# **/migrations/0002_*.py
+
+# IDEs
+.idea/
+*.swp
