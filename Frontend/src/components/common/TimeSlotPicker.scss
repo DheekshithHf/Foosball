@@ -1,0 +1,106 @@
+.time-slot-picker {
+  &__legend {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1rem;
+    padding: 1rem;
+    background: var(--card-bg-color, #f8f9fa);
+    border-radius: 8px;
+    border: 1px solid var(--card-border, rgba(166, 163, 162, 0.15));
+
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.85rem;
+      color: var(--text-color, #666);
+    }
+
+    .legend-color {
+      width: 16px;
+      height: 16px;
+      border-radius: 4px;
+      border: 1px solid rgba(0, 0, 0, 0.1);
+
+      &--available {
+        background: #28a745;
+      }
+
+      &--booked {
+        background: #dc3545;
+      }
+
+      &--selected {
+        background: #007bff;
+      }
+    }
+  }
+
+  &__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    gap: 0.75rem;
+  }
+}
+
+.time-slot {
+  padding: 1rem 0.75rem;
+  border: 2px solid transparent;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  background: var(--card-bg-color, white);
+
+  &--available {
+    background: rgba(40, 167, 69, 0.1);
+    color: #28a745;
+    border-color: rgba(40, 167, 69, 0.3);
+
+    &:hover {
+      background: rgba(40, 167, 69, 0.2);
+      transform: translateY(-2px);
+    }
+  }
+
+  &--booked {
+    background: rgba(220, 53, 69, 0.1);
+    color: #dc3545;
+    border-color: rgba(220, 53, 69, 0.3);
+    cursor: not-allowed;
+    opacity: 0.6;
+  }
+
+  &--selected {
+    background: rgba(0, 123, 255, 0.1);
+    color: #007bff;
+    border-color: #007bff;
+    transform: translateY(-2px);
+  }
+
+  &--unavailable {
+    background: var(--card-bg-color, #f8f9fa);
+    color: var(--text-color, #999);
+    border-color: var(--card-border, #ddd);
+    cursor: not-allowed;
+    opacity: 0.5;
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+  }
+}
+
+// Dark mode support
+body.dark-mode {
+  .time-slot-picker__legend {
+    background: var(--card-bg-color, #3d3d3d);
+    border-color: var(--card-border, #555);
+  }
+
+  .time-slot {
+    background: var(--card-bg-color, #2d2d2d);
+    color: var(--text-color, #fff);
+  }
+}

@@ -1,0 +1,332 @@
+.foosball-table-status {
+  margin-bottom: 2rem;
+
+  .status-card {
+    background: var(--card-bg-color, white);
+    border: 1px solid var(--card-border, rgba(166, 163, 162, 0.15));
+    border-radius: 12px;
+    padding: 2rem;
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    box-shadow: 0 4px 20px 0 var(--card-shadow, rgba(72, 72, 72, 0.1));
+    transition: all 0.3s ease;
+    background: linear-gradient(135deg, 
+      rgba(var(--primary-color-rgb, 236, 64, 1), 0.02) 0%, 
+      rgba(var(--primary-color-rgb, 236, 64, 1), 0.05) 100%);
+
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 32px 0 var(--card-shadow, rgba(72, 72, 72, 0.15));
+    }
+
+    @media (max-width: 968px) {
+      flex-direction: column;
+      text-align: center;
+      padding: 1.5rem;
+      gap: 1.5rem;
+    }
+  }
+
+  .table-icon {
+    flex-shrink: 0;
+
+    .table-graphic {
+      width: 120px;
+      height: 70px;
+      position: relative;
+      
+      .table-surface {
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(135deg, #2d8f2d 0%, #4CAF50 100%);
+        border-radius: 8px;
+        border: 3px solid #1a5a1a;
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 12px;
+        overflow: hidden;
+        
+        .center-line {
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          width: 2px;
+          height: 80%;
+          background: white;
+          z-index: 1;
+        }
+        
+        .player-figure {
+          width: 16px;
+          height: 16px;
+          background: linear-gradient(135deg, #ff6b35 0%, #ff8555 100%);
+          border-radius: 50%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-size: 10px;
+          color: white;
+          animation: bounce 3s infinite ease-in-out;
+          box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+          z-index: 2;
+          position: relative;
+          
+          &.player-1 {
+            animation-delay: 0s;
+            transform-origin: left center;
+          }
+          
+          &.player-2 {
+            animation-delay: 1.5s;
+            transform-origin: right center;
+          }
+        }
+
+        .goal {
+          position: absolute;
+          width: 8px;
+          height: 30px;
+          background: rgba(255, 255, 255, 0.3);
+          top: 50%;
+          transform: translateY(-50%);
+          
+          &.goal-left {
+            left: -4px;
+            border-radius: 0 4px 4px 0;
+          }
+          
+          &.goal-right {
+            right: -4px;
+            border-radius: 4px 0 0 4px;
+          }
+        }
+
+        // Add some field lines
+        &::before {
+          content: '';
+          position: absolute;
+          top: 15%;
+          left: 20%;
+          right: 20%;
+          height: 1px;
+          background: rgba(255, 255, 255, 0.3);
+        }
+
+        &::after {
+          content: '';
+          position: absolute;
+          bottom: 15%;
+          left: 20%;
+          right: 20%;
+          height: 1px;
+          background: rgba(255, 255, 255, 0.3);
+        }
+      }
+    }
+  }
+
+  .status-info {
+    flex: 1;
+    text-align: left;
+
+    @media (max-width: 968px) {
+      text-align: center;
+    }
+
+    h2 {
+      color: var(--text-color, #333);
+      font-size: 1.5rem;
+      font-weight: 600;
+      margin-bottom: 0.75rem;
+    }
+
+    .status-indicator {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-bottom: 0.75rem;
+      font-weight: 500;
+      font-size: 1.1rem;
+
+      @media (max-width: 968px) {
+        justify-content: center;
+      }
+
+      .status-dot {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        animation: pulse 2s infinite;
+      }
+
+      &.available {
+        color: #4CAF50;
+        .status-dot {
+          background: #4CAF50;
+          box-shadow: 0 0 8px rgba(76, 175, 80, 0.4);
+        }
+      }
+
+      &.busy {
+        color: #f44336;
+        .status-dot {
+          background: #f44336;
+          box-shadow: 0 0 8px rgba(244, 67, 54, 0.4);
+        }
+      }
+    }
+
+    .table-stats {
+      margin-bottom: 0.5rem;
+      
+      .stat {
+        color: var(--text-color, #666);
+        font-size: 0.9rem;
+
+        strong {
+          color: var(--primary-color, #ec4001);
+          font-weight: 600;
+        }
+      }
+    }
+
+    .next-slot {
+      color: var(--text-color, #666);
+      font-size: 0.9rem;
+      margin: 0;
+
+      strong {
+        color: var(--primary-color, #ec4001);
+        font-weight: 600;
+      }
+    }
+  }
+
+  .action-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+
+    @media (max-width: 968px) {
+      flex-direction: row;
+      justify-content: center;
+    }
+
+    @media (max-width: 480px) {
+      flex-direction: column;
+      width: 100%;
+    }
+  }
+
+  .book-now-btn {
+    border: none;
+    border-radius: 8px;
+    padding: 0.75rem 1.5rem;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    min-width: 140px;
+
+    &.primary {
+      background: linear-gradient(135deg, var(--primary-color, #ec4001) 0%, #ff6b35 100%);
+      color: white;
+      box-shadow: 0 4px 12px rgba(var(--primary-color-rgb, 236, 64, 1), 0.3);
+
+      &:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 6px 16px rgba(var(--primary-color-rgb, 236, 64, 1), 0.4);
+      }
+
+      &:active {
+        transform: translateY(0);
+      }
+    }
+
+    &.secondary {
+      background: var(--card-bg-color, white);
+      color: var(--text-color, #333);
+      border: 2px solid var(--card-border, rgba(166, 163, 162, 0.15));
+
+      &:hover {
+        border-color: var(--primary-color, #ec4001);
+        color: var(--primary-color, #ec4001);
+        transform: translateY(-1px);
+      }
+    }
+
+    .btn-icon {
+      font-size: 1rem;
+    }
+
+    @media (max-width: 968px) {
+      padding: 0.6rem 1.2rem;
+      font-size: 0.85rem;
+      min-width: 120px;
+    }
+  }
+}
+
+@keyframes bounce {
+  0%, 20%, 50%, 80%, 100% {
+    transform: translateY(0) rotate(0deg);
+  }
+  10% {
+    transform: translateY(-12px) rotate(-10deg);
+  }
+  30% {
+    transform: translateY(-8px) rotate(8deg);
+  }
+  40% {
+    transform: translateY(-12px) rotate(-6deg);
+  }
+  60% {
+    transform: translateY(-8px) rotate(5deg);
+  }
+}
+
+@keyframes pulse {
+  0% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.7;
+    transform: scale(1.1);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+// Dark mode support
+body.dark-mode .foosball-table-status {
+  .status-card {
+    background: var(--card-bg-color, #2d2d2d);
+    border-color: var(--card-border, #444);
+    background: linear-gradient(135deg, 
+      rgba(var(--primary-color-rgb, 236, 64, 1), 0.05) 0%, 
+      rgba(var(--primary-color-rgb, 236, 64, 1), 0.1) 100%);
+  }
+
+  .book-now-btn.secondary {
+    background: var(--card-bg-color, #3d3d3d);
+    border-color: var(--card-border, #555);
+    color: var(--text-color, #fff);
+
+    &:hover {
+      border-color: var(--primary-color, #ff6b35);
+      color: var(--primary-color, #ff6b35);
+    }
+  }
+}

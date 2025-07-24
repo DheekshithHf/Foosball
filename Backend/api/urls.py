@@ -1,6 +1,7 @@
 from django.urls import path
 from .views import (
     EmployeeDetailView,
+    EmployeeListView,
     BookingListCreateView,
     BookingDetailView,
     NotificationSettingsDetailView,
@@ -14,7 +15,9 @@ from .views import (
     join_player_request,
     leave_player_request,
     player_request_notifications,
-    mark_notification_read
+    mark_notification_read,
+    dashboard_stats,
+    user_bookings
 )
 from .auth_views import (
     signup_view,
@@ -34,7 +37,15 @@ urlpatterns = [
     path('auth/csrf/', get_csrf_token, name='auth-csrf'),
     
     # Existing endpoints
+    # Employee endpoints
+    path('employees/', EmployeeListView.as_view(), name='employee-list'),
     path('employees/<str:id>/', EmployeeDetailView.as_view(), name='employee-detail'),
+    
+    # Dashboard endpoints
+    path('dashboard/stats/', dashboard_stats, name='dashboard-stats'),
+    path('users/<str:employee_id>/bookings/', user_bookings, name='user-bookings'),
+    
+    # Existing endpoints
     path('bookings/', BookingListCreateView.as_view(), name='booking-list-create'),
     path('bookings/<str:id>/', BookingDetailView.as_view(), name='booking-detail'),
     path('notifications/<str:employee_id>/', NotificationSettingsDetailView.as_view(), name='notification-settings'),
