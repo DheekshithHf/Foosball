@@ -1,0 +1,170 @@
+.booking-card {
+  background: var(--card-bg-color, white);
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 20px 0 var(--card-shadow, rgba(72, 72, 72, 0.1));
+  border: 1px solid var(--card-border, rgba(166, 163, 162, 0.15));
+  transition: all 0.2s ease;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 32px 0 var(--card-shadow, rgba(72, 72, 72, 0.15));
+  }
+
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 1rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--card-border, rgba(166, 163, 162, 0.15));
+  }
+
+  &__date-time {
+    h3 {
+      margin: 0 0 0.25rem 0;
+      color: var(--text-color, #333);
+      font-size: 1.2rem;
+      font-weight: 600;
+    }
+
+    p {
+      margin: 0;
+      color: var(--text-color, #666);
+      font-size: 0.9rem;
+    }
+  }
+
+  &__status {
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+
+    &--success {
+      background: rgba(40, 167, 69, 0.1);
+      color: #28a745;
+      border: 1px solid rgba(40, 167, 69, 0.3);
+    }
+
+    &--danger {
+      background: rgba(220, 53, 69, 0.1);
+      color: #dc3545;
+      border: 1px solid rgba(220, 53, 69, 0.3);
+    }
+
+    &--warning {
+      background: rgba(255, 193, 7, 0.1);
+      color: #ffc107;
+      border: 1px solid rgba(255, 193, 7, 0.3);
+    }
+
+    &--info {
+      background: rgba(23, 162, 184, 0.1);
+      color: #17a2b8;
+      border: 1px solid rgba(23, 162, 184, 0.3);
+    }
+  }
+
+  &__details {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  &__table,
+  &__booked-by,
+  &__participants,
+  &__notes {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+
+    strong {
+      color: var(--text-color, #333);
+      font-size: 0.9rem;
+    }
+
+    span {
+      color: var(--text-color, #666);
+      font-size: 0.85rem;
+    }
+  }
+
+  .participants-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 0.25rem;
+  }
+
+  .participant-tag {
+    background: rgba(var(--primary-color-rgb, 236, 64, 1), 0.1);
+    color: var(--primary-color, #ec4001);
+    padding: 0.25rem 0.75rem;
+    border-radius: 15px;
+    font-size: 0.8rem;
+    font-weight: 500;
+    border: 1px solid rgba(var(--primary-color-rgb, 236, 64, 1), 0.3);
+  }
+
+  &__actions {
+    display: flex;
+    gap: 0.75rem;
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--card-border, rgba(166, 163, 162, 0.15));
+  }
+
+  .btn {
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    border: none;
+    font-size: 0.85rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+
+    &--small {
+      padding: 0.4rem 0.8rem;
+      font-size: 0.8rem;
+    }
+
+    &--secondary {
+      background: var(--card-bg-color, #f8f9fa);
+      color: var(--text-color, #666);
+      border: 1px solid var(--card-border, #ddd);
+
+      &:hover {
+        background: var(--primary-color, #ec4001);
+        color: white;
+      }
+    }
+
+    &--danger {
+      background: rgba(220, 53, 69, 0.1);
+      color: #dc3545;
+      border: 1px solid rgba(220, 53, 69, 0.3);
+
+      &:hover {
+        background: #dc3545;
+        color: white;
+      }
+    }
+  }
+}
+
+// Dark mode support
+body.dark-mode .booking-card {
+  background: var(--card-bg-color, #2d2d2d);
+  border-color: var(--card-border, #444);
+
+  &__date-time h3 {
+    color: var(--text-color, #fff);
+  }
+
+  &__details strong {
+    color: var(--text-color, #fff);
+  }
+}
