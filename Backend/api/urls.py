@@ -16,8 +16,23 @@ from .views import (
     player_request_notifications,
     mark_notification_read
 )
+from .auth_views import (
+    signup_view,
+    login_view,
+    logout_view,
+    check_auth_status
+)
+from .auth_views import get_csrf_token
+
 
 urlpatterns = [
+    # Authentication endpoints
+    path('auth/signup/', signup_view, name='auth-signup'),
+    path('auth/login/', login_view, name='auth-login'),
+    path('auth/logout/', logout_view, name='auth-logout'),
+    path('auth/status/', check_auth_status, name='auth-status'),
+    path('auth/csrf/', get_csrf_token, name='auth-csrf'),
+    
     # Existing endpoints
     path('employees/<str:id>/', EmployeeDetailView.as_view(), name='employee-detail'),
     path('bookings/', BookingListCreateView.as_view(), name='booking-list-create'),
