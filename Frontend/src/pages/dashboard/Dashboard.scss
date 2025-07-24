@@ -1,0 +1,396 @@
+.dashboard {
+  min-height: 100vh;
+  position: relative;
+  background: var(--background-color, #fff);
+  font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: var(--text-color, #333);
+
+  .background-pattern {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    background: 
+      radial-gradient(circle at 20% 80%, rgba(245, 70, 6, 0.08) 0%, transparent 50%),
+      radial-gradient(circle at 80% 20%, rgba(247, 147, 30, 0.08) 0%, transparent 50%),
+      radial-gradient(circle at 40% 40%, rgba(243, 96, 5, 0.06) 0%, transparent 50%);
+  }
+
+  .container {
+    max-width: 1600px;
+    margin: 0 auto;
+    padding: 2rem;
+    position: relative;
+    z-index: 1;
+  }
+
+  &__header {
+    margin-bottom: 2rem;
+    text-align: center;
+
+    h1 {
+      font-size: 2.5rem;
+      font-weight: 400;
+      color: var(--text-color, #333);
+      margin-bottom: 0.5rem;
+    }
+
+    p {
+      font-size: 1.1rem;
+      color: var(--text-color, #666);
+      opacity: 0.8;
+    }
+  }
+
+  &__stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+  }
+
+  &__content {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 2rem;
+    margin-top: 2rem;
+
+    @media (max-width: 768px) {
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+    }
+
+    .dashboard__section {
+      height: 300px;
+
+      .section-card {
+        background: var(--card-bg-color, white);
+        border-radius: 12px;
+        padding: 1.5rem;
+        box-shadow: 0 4px 20px 0 var(--card-shadow, rgba(72, 72, 72, 0.1));
+        border: 1px solid var(--card-border, rgba(166, 163, 162, 0.15));
+        transition: all 0.2s ease;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+
+        &:hover {
+          transform: translateY(-2px);
+          box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
+
+        .section-header {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          margin-bottom: 1.5rem;
+          padding-bottom: 1rem;
+          border-bottom: 1px solid var(--card-border, rgba(166, 163, 162, 0.15));
+
+          h3 {
+            margin: 0;
+            color: var(--text-color, #333);
+            font-size: 1.2rem;
+            font-weight: 600;
+          }
+
+          p {
+            margin: 0.5rem 0 0 0;
+            color: var(--text-color, #666);
+            font-size: 0.9rem;
+            opacity: 0.8;
+          }
+
+          .btn--link {
+            background: none;
+            border: none;
+            color: var(--primary-color, #ec4001);
+            font-size: 0.9rem;
+            font-weight: 500;
+            cursor: pointer;
+            padding: 0.5rem;
+            border-radius: 6px;
+            transition: all 0.2s ease;
+
+            &:hover {
+              background: var(--secondary-bg, rgba(249, 85, 44, 0.1));
+            }
+          }
+        }
+
+        // Ensure content fills remaining space
+        .section-content {
+          flex: 1;
+          display: flex;
+          flex-direction: column;
+        }
+
+        .quick-book-slots {
+          display: grid;
+          grid-template-columns: repeat(2, 1fr);
+          gap: 0.75rem;
+          margin-bottom: 1.5rem;
+
+          .quick-book-slot {
+            padding: 0.75rem;
+            background: var(--secondary-bg, rgba(249, 85, 44, 0.05));
+            border: 2px solid var(--card-border, rgba(166, 163, 162, 0.15));
+            border-radius: 8px;
+            color: var(--text-color, #333);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-weight: 500;
+
+            &:hover {
+              background: var(--primary-color, #ec4001);
+              color: white;
+              transform: translateY(-1px);
+            }
+          }
+        }
+
+        .bookings-list {
+          flex: 1;
+          display: flex;
+          flex-direction: column;
+          gap: 1rem;
+          max-height: 300px;
+          overflow-y: auto;
+        }
+
+        .leaderboard-widget {
+          flex: 1;
+          display: flex;
+          flex-direction: column;
+          gap: 0.75rem;
+          max-height: 280px;
+          overflow-y: auto;
+
+          .leaderboard-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 0.75rem;
+            background: var(--secondary-bg, rgba(249, 85, 44, 0.03));
+            border-radius: 8px;
+            border: 1px solid var(--card-border, rgba(166, 163, 162, 0.1));
+
+            .rank {
+              font-weight: 700;
+              color: var(--primary-color, #ec4001);
+              min-width: 30px;
+            }
+
+            .player-info {
+              flex: 1;
+              display: flex;
+              flex-direction: column;
+              gap: 0.25rem;
+
+              .name {
+                font-weight: 600;
+                color: var(--text-color, #333);
+              }
+
+              .stats {
+                font-size: 0.8rem;
+                color: var(--text-color, #666);
+              }
+            }
+
+            .points {
+              font-weight: 600;
+              color: var(--primary-color, #ec4001);
+            }
+          }
+        }
+
+        .activity-feed {
+          flex: 1;
+          display: flex;
+          flex-direction: column;
+          gap: 1rem;
+          max-height: 280px;
+          overflow-y: auto;
+
+          .activity-item {
+            display: flex;
+            gap: 1rem;
+            padding: 0.75rem;
+            background: var(--secondary-bg, rgba(249, 85, 44, 0.03));
+            border-radius: 8px;
+
+            .activity-icon {
+              font-size: 1.2rem;
+              min-width: 24px;
+            }
+
+            .activity-content {
+              flex: 1;
+
+              p {
+                margin: 0 0 0.25rem 0;
+                color: var(--text-color, #333);
+                font-size: 0.9rem;
+              }
+
+              .activity-time {
+                font-size: 0.8rem;
+                color: var(--text-color, #666);
+              }
+            }
+          }
+        }
+
+        .schedule-overview {
+          flex: 1;
+          display: flex;
+          flex-direction: column;
+          gap: 0.75rem;
+          max-height: 280px;
+          overflow-y: auto;
+
+          .schedule-item {
+            display: flex;
+            gap: 1rem;
+            padding: 0.75rem;
+            background: var(--secondary-bg, rgba(249, 85, 44, 0.03));
+            border-radius: 8px;
+            border: 1px solid var(--card-border, rgba(166, 163, 162, 0.1));
+
+            .schedule-time {
+              font-weight: 600;
+              color: var(--primary-color, #ec4001);
+              min-width: 80px;
+            }
+
+            .schedule-details {
+              flex: 1;
+              display: flex;
+              flex-direction: column;
+              gap: 0.25rem;
+
+              strong {
+                color: var(--text-color, #333);
+              }
+
+              span {
+                font-size: 0.8rem;
+                color: var(--text-color, #666);
+              }
+            }
+          }
+        }
+
+        .empty-state {
+          flex: 1;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          text-align: center;
+          padding: 2rem 1rem;
+          min-height: 150px;
+
+          p {
+            color: var(--text-color, #666);
+            margin-bottom: 1rem;
+          }
+
+          .btn {
+            padding: 0.75rem 1.5rem;
+            background: var(--primary-color, #ec4001);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.2s ease;
+
+            &:hover {
+              opacity: 0.9;
+              transform: translateY(-1px);
+            }
+          }
+        }
+
+        .btn--full {
+          width: 100%;
+          padding: 0.75rem;
+          background: var(--primary-color, #ec4001);
+          color: white;
+          border: none;
+          border-radius: 8px;
+          cursor: pointer;
+          font-weight: 500;
+          transition: all 0.2s ease;
+          margin-top: auto;
+
+          &:hover {
+            opacity: 0.9;
+            transform: translateY(-1px);
+          }
+        }
+      }
+    }
+  }
+}
+
+// Dark mode support
+body.dark-mode .dashboard {
+  .section-card {
+    background: var(--card-bg-color, #2d2d2d);
+    border-color: var(--card-border, #444);
+  }
+
+  .leaderboard-item,
+  .activity-item,
+  .schedule-item {
+    background: var(--secondary-bg, rgba(249, 85, 44, 0.1));
+    border-color: var(--card-border, #444);
+  }
+
+  .quick-book-slot {
+    background: rgba(var(--primary-color-rgb, 236, 64, 1), 0.2);
+    border-color: rgba(var(--primary-color-rgb, 236, 64, 1), 0.4);
+  }
+}
+
+// Responsive design
+@media (max-width: 1200px) {
+  .dashboard {
+    .container {
+      max-width: 95%;
+    }
+
+    &__content {
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .dashboard {
+    .container {
+      padding: 1rem;
+    }
+
+    &__header h1 {
+      font-size: 2rem;
+    }
+
+    &__stats {
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    }
+
+    &__content {
+      grid-template-columns: 1fr;
+    }
+
+    .quick-book-slots {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+}

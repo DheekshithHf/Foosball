@@ -4,6 +4,7 @@ from rest_framework.response import Response
 from django.shortcuts import get_object_or_404
 from django.utils import timezone
 from datetime import datetime, time, timedelta
+from django.db.models import Count, Q
 from .models import (Employee, Booking, NotificationSettings, Tournament, 
                     Match, PlayerRequest, PlayerRequestNotification)
 from .serializers import (
@@ -20,6 +21,11 @@ class EmployeeDetailView(generics.RetrieveAPIView):
     queryset = Employee.objects.all()
     serializer_class = EmployeeSerializer
     lookup_field = 'id'
+
+
+class EmployeeListView(generics.ListAPIView):
+    queryset = Employee.objects.filter(is_active=True)
+    serializer_class = EmployeeSerializer
 
 
 class BookingListCreateView(generics.ListCreateAPIView):
@@ -308,3 +314,88 @@ def availability_view(request):
     
     serializer = AvailabilitySerializer(data)
     return Response(serializer.data)
+
+
+@api_view(['GET'])
+def dashboard_stats(request):
+    """Get dashboard statistics"""
+    today = timezone.now().date()
+    
+    # Get today's bookings
+    todays_bookings = Booking.objects.filter(
+        date=today,
+        status='confirmed'
+    ).count()
+    
+    # Get upcoming bookings (next 7 days)
+    next_week = today + timedelta(days=7)
+    upcoming_bookings = Booking.objects.filter(
+        date__range=[today, next_week],
+        status='confirmed'
+    ).count()
+    
+    # Get active tournaments
+    active_tournaments = Tournament.objects.filter(
+        status__in=['registration-open', 'in-progress']
+    ).count()
+    
+    # Get open player requests
+    open_requests = PlayerRequest.objects.filter(
+        status='open',
+        expires_at__gt=timezone.now()
+    ).count()
+    
+    # Get recent bookings for activity feed
+    recent_bookings = Booking.objects.filter(
+        created_at__gte=timezone.now() - timedelta(days=3)
+    ).select_related('employee').order_by('-created_at')[:5]
+    
+    recent_activity = []
+    for booking in recent_bookings:
+        recent_activity.append({
+            'id': booking.id,
+            'type': 'booking',
+            'message': f"{booking.employee.name} booked {booking.date} at {booking.start_time}",
+            'timestamp': booking.created_at,
+            'employee': booking.employee.name
+        })
+    
+    return Response({
+        'stats': {
+            'todays_bookings': todays_bookings,
+            'upcoming_bookings': upcoming_bookings,
+            'active_tournaments': active_tournaments,
+            'open_requests': open_requests
+        },
+        'recent_activity': recent_activity
+    })
+
+
+@api_view(['GET'])
+def user_bookings(request, employee_id):
+    """Get bookings for a specific employee"""
+    try:
+        employee = Employee.objects.get(id=employee_id)
+    except Employee.DoesNotExist:
+        return Response({'error': 'Employee not found'}, status=status.HTTP_404_NOT_FOUND)
+    
+    # Get upcoming bookings
+    upcoming = Booking.objects.filter(
+        employee=employee,
+        date__gte=timezone.now().date(),
+        status='confirmed'
+    ).order_by('date', 'start_time')
+    
+    # Get past bookings
+    past = Booking.objects.filter(
+        employee=employee,
+        date__lt=timezone.now().date()
+    ).order_by('-date', '-start_time')[:10]
+    
+    upcoming_serializer = BookingSerializer(upcoming, many=True)
+    past_serializer = BookingSerializer(past, many=True)
+    
+    return Response({
+        'upcoming': upcoming_serializer.data,
+        'past': past_serializer.data
+    })
