@@ -19,8 +19,24 @@ from .views import (
     dashboard_stats,
     user_bookings
 )
+from .auth_views import (
+    signup_view,
+    login_view,
+    logout_view,
+    check_auth_status
+)
+from .auth_views import get_csrf_token
+
 
 urlpatterns = [
+    # Authentication endpoints
+    path('auth/signup/', signup_view, name='auth-signup'),
+    path('auth/login/', login_view, name='auth-login'),
+    path('auth/logout/', logout_view, name='auth-logout'),
+    path('auth/status/', check_auth_status, name='auth-status'),
+    path('auth/csrf/', get_csrf_token, name='auth-csrf'),
+    
+    # Existing endpoints
     # Employee endpoints
     path('employees/', EmployeeListView.as_view(), name='employee-list'),
     path('employees/<str:id>/', EmployeeDetailView.as_view(), name='employee-detail'),
